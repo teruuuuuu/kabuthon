@@ -55,7 +55,7 @@ def price_notification():
     for brand in BrandRepo().select_all_brand():
         code = brand.code
         name = brand.name
-        brand = BrandRepo().select_brand_by_code(code)
+        file_path = f'temp/{code}_candle.png'
         prices = BrandRepo().select_prices(code)
         data = {'date': list(map(lambda p: p.date, prices)),
                 'open': list(map(lambda p: p.open, prices)),
@@ -73,8 +73,9 @@ def price_notification():
         register_matplotlib_converters()
         ax.set_xlim(df.index[0].date(), df.index[-1].date())  # x軸の範囲
         fig.autofmt_xdate()  # x軸のオートフォーマット
-        plt.savefig(f'temp/{code}_candle.png')
+        plt.savefig(file_path)
         slack_comment(f'{code} {name} ローソク足チャート')
         time.sleep(2)
-        slack_file_upload(f'temp/{code}_candle.png')
+        slack_file_upload(file_path)
         time.sleep(5)
+        os.remove(file_path)
