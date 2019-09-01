@@ -1,0 +1,10 @@
+__pycache__/
+venv
+.idea
+*.db
+
+kabuthon/.env
+brand_list.txt
+temp/*
+!.gitkeep
+notebook/
