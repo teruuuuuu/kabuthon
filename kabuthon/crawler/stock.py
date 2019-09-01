@@ -7,7 +7,7 @@ import pandas as pd
 
 def crawl_stock(code):
     opener = urllib.request.build_opener()
-    url = f'https://info.finance.yahoo.co.jp/history/?code={code}'
+    url = f'https://info.finance.yahoo.co.jp/history/?code={code}.T'
     html = opener.open(url).read().decode("utf-8")
     q = PyQuery(html, parser='html')
 
@@ -26,8 +26,23 @@ def crawl_stock(code):
     def to_int(numberText):
         return int(numberText.replace(",", ""))
 
-    dates = list(map(lambda a: to_date(a.text), get_table_row(1)))
-    opens = list(map(lambda a: to_float(a.text), get_table_row(2)))
+    # TODO 株式の分割とかをうまく扱えるようにする
+    invalid_rows = []
+    for v, index in zip(get_table_row(2), range(len(get_table_row(2)))):
+        try:
+            to_float(v.text)
+        except Exception:
+            invalid_rows.append(index)
+
+    def filter_invalid(elements):
+        result = []
+        for v, index in zip(elements, range(len(elements))):
+            if index not in invalid_rows:
+                result.append(v)
+        return result
+
+    dates = list(map(lambda a: to_date(a.text), filter_invalid(get_table_row(1))))
+    opens = list(map(lambda a: to_float(a.text), filter_invalid(get_table_row(2))))
     heighs = list(map(lambda a: to_float(a.text), get_table_row(3)))
     lows = list(map(lambda a: to_float(a.text), get_table_row(4)))
     closes = list(map(lambda a: to_float(a.text), get_table_row(5)))
