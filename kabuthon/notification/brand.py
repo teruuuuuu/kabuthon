@@ -79,7 +79,7 @@ def price_notification():
         fig.autofmt_xdate()  # x軸のオートフォーマット
         plt.savefig(file_path)
         slack_comment(f'{code} {name} ローソク足チャート')
-        time.sleep(2)
+        time.sleep(10)
         slack_file_upload(file_path)
-        time.sleep(5)
+        time.sleep(10)
         os.remove(file_path)

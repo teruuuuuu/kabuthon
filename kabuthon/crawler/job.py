@@ -29,7 +29,7 @@ def sync_brand():
             brand = get_brand(new_code)
             print(brand)
             yield Brand(brand[0], brand[1], brand[2], brand[3], brand[5], brand[4])
-            time.sleep(3)
+            time.sleep(30)
 
     print("sync brand start")
     target_codes_set = set(read_brand_codes("brand_list.txt"))
@@ -43,7 +43,7 @@ def sync_brand():
 
 def save_stock():
     def crawl(code):
-        time.sleep(3)
+        time.sleep(30)
         return map(lambda l: Price(code, l[0].to_pydatetime(), l[1], l[2], l[3], l[4], l[5], l[6]),
                    crawl_stock(code).values.tolist())
     print("save stock start")
