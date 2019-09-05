@@ -63,6 +63,7 @@ brand_list.txt.sampleにサンプルがあるのでbrand_list.txtにリネーム
 --setup DBの初期化
 --crawl クロール実行
 --notification 通知実行
+--simulate シミュレーション結果の通知
 ```
 実行例
 > python kabuthon --setup --crawl --notification
