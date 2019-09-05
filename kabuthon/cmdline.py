@@ -10,6 +10,7 @@ def run(argv=sys.argv[1:]):
     parser.add_argument('--setup', action='store_true')
     parser.add_argument('--crawl', action='store_true')
     parser.add_argument('--notification', action='store_true')
+    parser.add_argument('--simulate', action='store_true')
     args = parser.parse_args(argv)
     if args.setup:
         task.setup()
@@ -17,3 +18,5 @@ def run(argv=sys.argv[1:]):
         task.save_crawl()
     if args.notification:
         task.notification()
+    if args.simulate:
+        task.simulate()

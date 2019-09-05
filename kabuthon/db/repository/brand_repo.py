@@ -22,7 +22,6 @@ class BrandRepo:
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
-            print("brand repo new")
             cls._instance = super(BrandRepo, cls).__new__(cls, *args, **kwargs)
             cls.conn = DbConnection()
             cls._instance.brand_dao = BrandDao()
@@ -91,6 +90,11 @@ class BrandRepo:
     def select_prices(self, code):
         prices = list(map(lambda p: Price(p[0], datetime.strptime(p[1], '%Y/%m/%d'), p[2], p[3], p[4], p[5], p[6], p[7]),
                  list(self.price_dao.select_by_code(code))))
+        return sorted(prices, key=lambda p: p.date)
+
+    def select_price_by_code_date(self, code, date):
+        prices = list(map(lambda p: Price(p[0], datetime.strptime(p[1], '%Y/%m/%d'), p[2], p[3], p[4], p[5], p[6], p[7]),
+                 list(self.price_dao.select_by_code_date(code, date))))
         return sorted(prices, key=lambda p: p.date)
 
     def select_brand_by_code(self, code):

@@ -52,6 +52,10 @@ def brand_notification():
     slack_comment("監視対象株\n" + str(df))
 
 def price_notification():
+    # TODO 監視対象企業が30社の場合に描画している図が多いという警告が出たのでなおす
+    #  RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`
+    # ) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+    #   fig = plt.figure()
     for brand in BrandRepo().select_all_brand():
         code = brand.code
         name = brand.name

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import db.job as db_job
+import simulation.job as simulate_job
 from crawler.job import save_newbrand
 from crawler.job import save_stock
 from crawler.job import sync_brand
@@ -18,3 +19,7 @@ def save_crawl():
 
 def notification():
     brand_notification()
+
+
+def simulate():
+    simulate_job.simulate()

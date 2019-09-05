@@ -34,7 +34,7 @@ def insert_sql(code, date, op, high, low, close, volume, adjust_close):
 
 def select_by_code_sql(code):
     return f"""
-        SELECT code, date, open, high, low, close, volume, adjust_close from price WHERE code = '{code}'
+        SELECT code, date, open, high, low, close, volume, adjust_close from price WHERE code = '{code}' order by date asc
     """
 
 def select_by_code_date_sql(code, date):
